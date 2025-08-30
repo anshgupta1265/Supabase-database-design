@@ -1,13 +1,11 @@
-📌 Project Overview
+Project Overview
 
 This project demonstrates a Supabase database design and a minimal Next.js frontend for managing users, events, and RSVPs. Users can register, create events, and RSVP to events.
 
-🔧 Part 1 — Database Design
+Part 1 — Database Design
 Database Schema
 
-The database consists of three main tables:
-
-Users
+Users Table
 
 id (UUID, Primary Key)
 
@@ -17,7 +15,7 @@ email (TEXT, unique, not null)
 
 created_at (TIMESTAMP, default now())
 
-Events
+Events Table
 
 id (UUID, Primary Key)
 
@@ -31,7 +29,7 @@ city (TEXT)
 
 created_by (UUID, Foreign Key → Users.id, ON DELETE CASCADE)
 
-RSVPs
+RSVPs Table
 
 id (UUID, Primary Key)
 
@@ -45,9 +43,9 @@ Unique constraint on (user_id, event_id) to prevent duplicate RSVPs
 
 Design Choices
 
-Referential Integrity: Deleting a user or event cascades to RSVPs to maintain consistency.
+Referential Integrity: Deleting a user or event cascades to RSVPs.
 
-Normalization: Each entity has its own table; relationships use foreign keys.
+Normalization: Separate tables for each entity.
 
 Constraints:
 
@@ -61,25 +59,25 @@ Sample Data
 
 Users: 10 sample users
 
-Events: 5 sample events, each linked to a creator
+Events: 5 sample events linked to creators
 
-RSVPs: 20 sample RSVPs distributed across users and events
+RSVPs: 20 sample RSVPs across users and events
 
 Deliverables
 
-SQL dump of the schema
+SQL dump of schema
 
-Database screenshots showing all tables
+Database screenshots
 
 ER diagram screenshot
 
-🚀 Part 2 — Minimal Next.js App (Bonus)
+Part 2 — Minimal Next.js App (Bonus)
 Features
 
-Events Listing Page: Displays all upcoming events from the Events table.
+Events Listing Page: Shows all upcoming events from the Events table.
 
-RSVP Page: Allows users to RSVP (Yes/No/Maybe) for a specific event.
+RSVP Page: Allows users to RSVP (Yes/No/Maybe) for events.
 
 Supabase Integration: Uses @supabase/supabase-js to fetch and insert data.
 
-Deployment: Live on Vercel connected to Supabase backend.
+Deployment: Live on Vercel connected to Supabase.

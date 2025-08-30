@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+📌 Project Overview
 
-## Getting Started
+This project demonstrates a Supabase database design and a minimal Next.js frontend for managing users, events, and RSVPs. Users can register, create events, and RSVP to events.
 
-First, run the development server:
+🔧 Part 1 — Database Design
+Database Schema
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The database consists of three main tables:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Users
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+id (UUID, Primary Key)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+name (TEXT, not null)
 
-## Learn More
+email (TEXT, unique, not null)
 
-To learn more about Next.js, take a look at the following resources:
+created_at (TIMESTAMP, default now())
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Events
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+id (UUID, Primary Key)
 
-## Deploy on Vercel
+title (TEXT, not null)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+description (TEXT)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+date (TIMESTAMP, not null)
+
+city (TEXT)
+
+created_by (UUID, Foreign Key → Users.id, ON DELETE CASCADE)
+
+RSVPs
+
+id (UUID, Primary Key)
+
+user_id (UUID, Foreign Key → Users.id, ON DELETE CASCADE)
+
+event_id (UUID, Foreign Key → Events.id, ON DELETE CASCADE)
+
+status (TEXT, constraint: 'Yes' | 'No' | 'Maybe')
+
+Unique constraint on (user_id, event_id) to prevent duplicate RSVPs
+
+Design Choices
+
+Referential Integrity: Deleting a user or event cascades to RSVPs to maintain consistency.
+
+Normalization: Each entity has its own table; relationships use foreign keys.
+
+Constraints:
+
+Unique emails for users
+
+One RSVP per user per event
+
+Status limited to 'Yes', 'No', or 'Maybe'
+
+Sample Data
+
+Users: 10 sample users
+
+Events: 5 sample events, each linked to a creator
+
+RSVPs: 20 sample RSVPs distributed across users and events
+
+Deliverables
+
+SQL dump of the schema
+
+Database screenshots showing all tables
+
+ER diagram screenshot
+
+🚀 Part 2 — Minimal Next.js App (Bonus)
+Features
+
+Events Listing Page: Displays all upcoming events from the Events table.
+
+RSVP Page: Allows users to RSVP (Yes/No/Maybe) for a specific event.
+
+Supabase Integration: Uses @supabase/supabase-js to fetch and insert data.
+
+Deployment: Live on Vercel connected to Supabase backend.
